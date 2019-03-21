@@ -1,7 +1,22 @@
 # Django request mapping system
 
+This short snipped allows mapping the same `path` to multiple functions depending on the HTTP method, like below:
 
-Imagine you have the following methods in `views.py`:
+```python
+# urls.py
+
+urlpatterns = [
+    path('object/<int:id>', req_map(
+        POST=views.obj_create,
+        DELETE=views.obj_delete,
+        GET=views.obj_get,
+        PATCH=views.obj_edit
+    ), name="object")
+]
+
+```
+
+where in `views.py`
 
 ```python
 
@@ -27,24 +42,6 @@ def obj_replace(request, id=-1):
     return HttpResponse("PUT")
 
 ```
-
-This short snipped allows mapping the same `path` to multiple functions depending on the HTTP method, like below:
-
-```python
-# urls.py
-
-urlpatterns = [
-    path('object/<int:id>', req_map(
-        POST=views.obj_create,
-        DELETE=views.obj_delete,
-        GET=views.obj_get,
-        PATCH=views.obj_edit
-    ), name="object")
-]
-
-```
-
-Just paste it before your `urlpatterns` declaration (or in a separate file) and use as mentioned above.
 
 ----
 
