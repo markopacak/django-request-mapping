@@ -43,3 +43,9 @@ urlpatterns = [
 ]
 
 ```
+
+Just paste it before your `urlpatterns` declaration (or in a separate file) and use as mentioned above.
+
+----
+
+Developed by Marko Pacak (`info @ myfullname dot com`)
