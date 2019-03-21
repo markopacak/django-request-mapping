@@ -4,6 +4,9 @@
 Imagine you have the following methods in `views.py`:
 
 ```python
+
+# views.py
+
 def obj_create(request, id=-1):
     return HttpResponse("POST")
 
@@ -22,5 +25,21 @@ def obj_edit(request, id):
 
 def obj_replace(request, id=-1):
     return HttpResponse("PUT")
+
+```
+
+This short snipped allows mapping the same `path` to multiple functions depending on the HTTP method, like below:
+
+```python
+# urls.py
+
+urlpatterns = [
+    path('object/<int:id>', req_map(
+        POST=views.obj_create,
+        DELETE=views.obj_delete,
+        GET=views.obj_get,
+        PATCH=views.obj_edit
+    ), name="object")
+]
 
 ```
