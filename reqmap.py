@@ -41,7 +41,5 @@ def req_map(**mapping_table):
         :return:
         """
         handler = mapping_table.get(request.method, invalid_method)
-        print(args)
-        print(kwargs)
         return handler(request, *args, **kwargs)
     return wrapper
