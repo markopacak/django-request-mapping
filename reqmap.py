@@ -3,8 +3,7 @@
 # from . import views
 
 
-
-def req_map(**table):
+def req_map(**mapping_table):
     """
     Wraps multiple executable functions for each suitable HTTP method and returns the corresponding view function in
     case it exists, or
@@ -15,7 +14,7 @@ def req_map(**table):
         * DELETE    to delete an object with a given identifier (ID)
         * PATCH     to edit an object with a given identifier (ID)
     :param:
-        table:  A [key,value] table containing HTTP method types as key and the function to
+        mapping_table:  A [key,value] table containing HTTP method types as key and the function to
                 execute as value
     :return:
         The function that will elaborate the request (based on the HTTP method).
@@ -26,21 +25,23 @@ def req_map(**table):
         """
         A function returning a HttpResponseNotAllowed object, as not matching HTTP method was found.
         :param request: the incoming HTTP request
-        :param args: the arguments supplied
-        :param kwargs:
+        :param args: unused
+        :param kwargs: named path arguments
         :return: a HttpResponseNotAllowed object containing a list of supported methods (as per standard)
         """
-        return HttpResponseNotAllowed(table.keys())
+        return HttpResponseNotAllowed(mapping_table.keys())
 
     def wrapper(request: HttpRequest, *args, **kwargs):
         """
         Attempts to find a suitable function to execute for the HTTP method and returns a HttpResponseNotAllowed
         object in case no suitable function exists.
         :param request: the incoming HTTP Request
-        :param args:
-        :param kwargs:
+        :param args: unused
+        :param kwargs: named path arguments
         :return:
         """
-        handler = table.get(request.method, invalid_method)
+        handler = mapping_table.get(request.method, invalid_method)
+        print(args)
+        print(kwargs)
         return handler(request, *args, **kwargs)
     return wrapper
