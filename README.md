@@ -38,7 +38,7 @@ def obj_edit(request, id):
     return HttpResponse("PATCH")
 
 
-def obj_replace(request, id=-1):
+def obj_replace(request, id):
     return HttpResponse("PUT")
 
 ```
